@@ -1,10 +1,71 @@
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Vic Excursions — File Generator</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Hello, World!</h1>
+    <div class="container">
+        <header>
+            <h1>Simple File Generator</h1>
+            <p class="lead">Fill the form, then download generated files. Works on GitHub Pages and VS Code Live Server — no install required.</p>
+        </header>
+
+        <form id="generator-form">
+            <div class="field">
+                <label>Project name
+                    <input type="text" id="projectName" name="projectName" required placeholder="My Project">
+                </label>
+            </div>
+            <div class="field">
+                <label>Author
+                    <input type="text" id="author" name="author" placeholder="Your Name">
+                </label>
+            </div>
+            <div class="field">
+                <label>Description
+                    <textarea id="description" name="description" rows="4" placeholder="Short description"></textarea>
+                </label>
+            </div>
+            <div class="field">
+                <label>License
+                    <select id="license" name="license">
+                        <option>MIT</option>
+                        <option>Apache-2.0</option>
+                        <option>GPL-3.0</option>
+                        <option>Unlicense</option>
+                    </select>
+                </label>
+            </div>
+
+            <fieldset>
+                <legend>Files to generate</legend>
+                <label><input type="checkbox" name="files" value="readme" checked> README.md</label>
+                <label><input type="checkbox" name="files" value="config" checked> config.json</label>
+                <label><input type="checkbox" name="files" value="index"> sample.html</label>
+                <label><input type="checkbox" name="files" value="notes"> notes.txt</label>
+            </fieldset>
+
+            <div class="actions">
+                <button type="submit" id="generateBtn">Generate files</button>
+            </div>
+        </form>
+
+        <section id="downloads" class="hidden">
+            <h2>Download generated files</h2>
+            <ul id="fileList" class="file-list"></ul>
+            <div class="actions">
+                <button id="backBtn">Back to edit</button>
+            </div>
+        </section>
+
+        <footer>
+            <p class="muted">This is a static page using vanilla HTML, CSS and JavaScript. Drop these files in a repo and enable GitHub Pages or open locally with Live Server.</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
 </body>
 </html>
