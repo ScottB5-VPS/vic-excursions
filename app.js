@@ -1,8 +1,15 @@
 document.addEventListener('DOMContentLoaded', () => {
+  const landing = document.getElementById('landing');
   const form = document.getElementById('generator-form');
   const downloads = document.getElementById('downloads');
   const fileList = document.getElementById('fileList');
   const backBtn = document.getElementById('backBtn');
+
+  // Get Started button functionality
+  document.getElementById('getStartedBtn').addEventListener('click', () => {
+    landing.classList.add('hidden');
+    form.classList.remove('hidden');
+  });
 
   function makeBlobAndDownload(filename, content, mime) {
     const blob = new Blob([content], { type: mime || 'application/octet-stream' });
