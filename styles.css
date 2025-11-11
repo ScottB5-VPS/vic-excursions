@@ -126,6 +126,11 @@ textarea {
   border-color: var(--vic-blue);
 }
 
+.pill-button:focus {
+  outline: 2px solid var(--vic-blue);
+  outline-offset: 2px;
+}
+
 .pill-button input {
   display: none;
 }
@@ -165,6 +170,11 @@ textarea {
 .activity-card:hover {
   background: var(--vic-light-blue);
   border-color: var(--vic-blue);
+}
+
+.activity-card:focus {
+  outline: 2px solid var(--vic-blue);
+  outline-offset: 2px;
 }
 
 .activity-card input {
@@ -468,6 +478,15 @@ textarea {
   background: #1565c0;
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(25, 118, 210, 0.4);
+}
+
+.get-started-btn:focus,
+.primary-btn:focus,
+.secondary-btn:focus,
+.download-btn:focus,
+.edit-btn:focus {
+  outline: 2px solid var(--vic-blue);
+  outline-offset: 2px;
 }
 
 @media (max-width: 768px) {

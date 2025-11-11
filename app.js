@@ -25,6 +25,54 @@ document.addEventListener('DOMContentLoaded', () => {
     console.error('Elements not found:', { getStartedBtn, landing, form });
   }
 
+  // Make form buttons tabbable
+  function makeButtonsTabbable() {
+    // Add tabindex to all pill buttons and activity cards
+    const pillButtons = document.querySelectorAll('.pill-button');
+    const activityCards = document.querySelectorAll('.activity-card');
+    const actionButtons = document.querySelectorAll('.primary-btn, .secondary-btn, .get-started-btn, .download-btn, .edit-btn');
+    
+    // Make pill buttons tabbable
+    pillButtons.forEach((button, index) => {
+      button.setAttribute('tabindex', '0');
+      button.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          const input = button.querySelector('input');
+          if (input) {
+            input.checked = true;
+            input.dispatchEvent(new Event('change'));
+          }
+        }
+      });
+    });
+    
+    // Make activity cards tabbable
+    activityCards.forEach((card, index) => {
+      card.setAttribute('tabindex', '0');
+      card.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          const input = card.querySelector('input');
+          if (input) {
+            input.checked = !input.checked;
+            input.dispatchEvent(new Event('change'));
+          }
+        }
+      });
+    });
+    
+    // Action buttons are already tabbable by default, just ensure they have tabindex
+    actionButtons.forEach((button) => {
+      if (!button.hasAttribute('tabindex')) {
+        button.setAttribute('tabindex', '0');
+      }
+    });
+  }
+  
+  // Call the function after DOM is ready
+  makeButtonsTabbable();
+
   function makeBlobAndDownload(filename, content, mime) {
     const blob = new Blob([content], { type: mime || 'application/octet-stream' });
     const url = URL.createObjectURL(blob);
@@ -168,7 +216,7 @@ document.addEventListener('DOMContentLoaded', () => {
       paperForms.push(documentLibrary['swimming-approval']);
       paperForms.push(documentLibrary['swimming-skills']);
       onlineForms.push({
-        title: 'Student Activity Locator (SAIL)',
+        title: 'Student Activity Locator (SAL)',
         link: '#',
         description: 'Track student participation in water activities'
       });
