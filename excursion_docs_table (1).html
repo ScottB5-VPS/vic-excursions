@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excursion Documentation Requirements</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 20px;
+            line-height: 1.4;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.2em;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .legend {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin-bottom: 25px;
+            border-radius: 8px;
+        }
+        
+        .legend h3 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+        
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 12px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.9em;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        
+        th:first-child {
+            width: 200px;
+            min-width: 200px;
+        }
+        
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+            vertical-align: top;
+            font-size: 0.85em;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        tr:hover {
+            background-color: #e3f2fd;
+            transition: background-color 0.3s ease;
+        }
+        
+        .excursion-type {
+            font-weight: 600;
+            color: #2c3e50;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .required {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            font-weight: 500;
+        }
+        
+        .conditional {
+            background-color: #fff3cd;
+            color: #856404;
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-size: 0.8em;
+        }
+        
+        .not-required {
+            color: #6c757d;
+            font-style: italic;
+        }
+        
+        .document-name {
+            font-weight: 500;
+            color: #495057;
+        }
+        
+        .notes {
+            background: #e8f4f8;
+            border-left: 4px solid #17a2b8;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 8px;
+        }
+        
+        .notes h3 {
+            margin-top: 0;
+            color: #0c5460;
+        }
+        
+        .universal-req {
+            background: #fff8e1;
+            border: 2px solid #ffc107;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .universal-req h3 {
+            color: #b8860b;
+            margin-top: 0;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+                margin: 10px;
+            }
+            
+            table {
+                font-size: 0.8em;
+            }
+            
+            th, td {
+                padding: 8px 6px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏫 Excursion Documentation Requirements</h1>
+        
+        <div class="universal-req">
+            <h3>🌟 Universal Requirements (ALL Excursions)</h3>
+            <strong>These are now included in the first three columns of the table below:</strong> Camps, Excursions, Swimming and Water-based Activities Checklist • Student Activity Locator (SAL) - complete 5+ business days prior • Principal signature on checklist
+        </div> prior • Principal signature on checklist
+        </div>
+        
+        <div class="legend">
+            <h3>📋 Legend</h3>
+            <span class="required">Required</span> - Must be completed for this excursion type<br>
+            <span class="conditional">Conditional</span> - Required only under specific circumstances<br>
+            <span class="not-required">Not Required</span> - Not needed for this excursion type
+        </div>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Excursion Type</th>
+                    <th>Checklist (Parts A & B)</th>
+                    <th>Student Activity Locator (SAL)</th>
+                    <th>Principal Signature</th>
+                    <th>Local Excursions Annual Consent Form</th>
+                    <th>Notification of Local Excursions</th>
+                    <th>Standard Consent Form</th>
+                    <th>Principal Approval Form</th>
+                    <th>Medical Info Reminder Only</th>
+                    <th>Medical Form - Day Excursions (Adventure)</th>
+                    <th>Medical Form - Camps & Overseas</th>
+                    <th>Risk Assessment (Local)</th>
+                    <th>Risk Register & Emergency Plan</th>
+                    <th>Staff Travel Application</th>
+                    <th>Pre-Activity Check (Adventure)</th>
+                    <th>Student Skills (Swimming)</th>
+                    <th>Communications Plan</th>
+                    <th>VMIA Travel Insurance</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="excursion-type">Local Excursions</td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="not-required">Not Required</span></td>
+                    <td><span class="not-required">Not Required</span></td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="not-required">Not Required</span></td>
+                    <td><span class="not-required">Not Required</span></td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="not-required">Not Required</span></td>
+                    <td><span class="not-required">Not Required</span></td>
+                    <td><span class="not-required">Not Required</span></td>
+                    <td><span class="not-required">Not Required</span></td>
+                    <td><span class="not-required">Not Required</span></td>
+                    <td><span class="not-required">Not Required</span></td>
+                </tr>
+                <tr>
+                    <td class="excursion-type">Day Excursions (No Adventure)</td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="not-required">Not Required</span></td>
+                    <td><span class="not-required">Not Required</span></td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="not-required">Not Required</span></td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="not-required">Not Required</span></td>
+                    <td><span class="not-required">Not Required</span></td>
+                    <td><span class="not-required">Not Required</span></td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="not-required">Not Required</span></td>
+                    <td><span class="not-required">Not Required</span></td>
+                    <td><span class="not-required">Not Required</span></td>
+                    <td><span class="conditional">If Remote</span></td>
+                    <td><span class="not-required">Not Required</span></td>
+                </tr>
+                <tr>
+                    <td class="excursion-type">Day Excursions (Adventure)</td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="not-required">Not Required</span></td>
+                    <td><span class="not-required">Not Required</span></td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="not-required">Not Required</span></td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="not-required">Not Required</span></td>
+                    <td><span class="not-required">Not Required</span></td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="not-required">Not Required</span></td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="conditional">If Swimming</span></td>
+                    <td><span class="conditional">If Remote</span></td>
+                    <td><span class="not-required">Not Required</span></td>
+                </tr>
+                <tr>
+                    <td class="excursion-type">Overnight/Camps (No Adventure)</td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="not-required">Not Required</span></td>
+                    <td><span class="not-required">Not Required</span></td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="not-required">Not Required</span></td>
+                    <td><span class="not-required">Not Required</span></td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="not-required">Not Required</span></td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="not-required">Not Required</span></td>
+                    <td><span class="not-required">Not Required</span></td>
+                    <td><span class="conditional">If Swimming</span></td>
+                    <td><span class="conditional">If Remote</span></td>
+                    <td><span class="not-required">Not Required</span></td>
+                </tr>
+                <tr>
+                    <td class="excursion-type">Overnight/Camps (Adventure)</td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="not-required">Not Required</span></td>
+                    <td><span class="not-required">Not Required</span></td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="not-required">Not Required</span></td>
+                    <td><span class="not-required">Not Required</span></td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="not-required">Not Required</span></td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="not-required">Not Required</span></td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="conditional">If Swimming</span></td>
+                    <td><span class="conditional">If Remote</span></td>
+                    <td><span class="not-required">Not Required</span></td>
+                </tr>
+                <tr>
+                    <td class="excursion-type">Interstate (Day)</td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="not-required">Not Required</span></td>
+                    <td><span class="not-required">Not Required</span></td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="not-required">Not Required</span></td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="not-required">Not Required</span></td>
+                    <td><span class="not-required">Not Required</span></td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="conditional">If Adventure</span></td>
+                    <td><span class="conditional">If Swimming</span></td>
+                    <td><span class="conditional">If Remote</span></td>
+                    <td><span class="conditional">Recommended</span></td>
+                </tr>
+                <tr>
+                    <td class="excursion-type">Interstate (Overnight)</td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="not-required">Not Required</span></td>
+                    <td><span class="not-required">Not Required</span></td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="not-required">Not Required</span></td>
+                    <td><span class="not-required">Not Required</span></td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="not-required">Not Required</span></td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="conditional">If Adventure</span></td>
+                    <td><span class="conditional">If Swimming</span></td>
+                    <td><span class="conditional">If Remote</span></td>
+                    <td><span class="conditional">Recommended</span></td>
+                </tr>
+                <tr>
+                    <td class="excursion-type">Overseas (Any Duration)</td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="not-required">Not Required</span></td>
+                    <td><span class="not-required">Not Required</span></td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="not-required">Not Required</span></td>
+                    <td><span class="not-required">Not Required</span></td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="not-required">Not Required</span></td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="conditional">If Adventure</span></td>
+                    <td><span class="conditional">If Swimming</span></td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="required">Required</span></td>
+                </tr>
+                <tr>
+                    <td class="excursion-type">Weekend/Holiday Excursions</td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="not-required">Not Required</span></td>
+                    <td><span class="not-required">Not Required</span></td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="conditional">If No Adventure</span></td>
+                    <td><span class="conditional">If Day Adventure</span></td>
+                    <td><span class="conditional">If Overnight</span></td>
+                    <td><span class="not-required">Not Required</span></td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="conditional">If Interstate/OS</span></td>
+                    <td><span class="conditional">If Adventure</span></td>
+                    <td><span class="conditional">If Swimming</span></td>
+                    <td><span class="conditional">If Remote/OS</span></td>
+                    <td><span class="conditional">If Overseas</span></td>
+                </tr>
+                <tr>
+                    <td class="excursion-type">Sea/Air Travel Excursions</td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="not-required">Not Required</span></td>
+                    <td><span class="not-required">Not Required</span></td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="conditional">If No Adventure</span></td>
+                    <td><span class="conditional">If Day Adventure</span></td>
+                    <td><span class="conditional">If Overnight/OS</span></td>
+                    <td><span class="not-required">Not Required</span></td>
+                    <td><span class="required">Required</span></td>
+                    <td><span class="conditional">If Interstate/OS</span></td>
+                    <td><span class="conditional">If Adventure</span></td>
+                    <td><span class="conditional">If Swimming</span></td>
+                    <td><span class="conditional">If Remote/OS</span></td>
+                    <td><span class="conditional">If Overseas</span></td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div class="notes">
+            <h3>📝 Important Notes</h3>
+            <ul>
+                <li><strong>Swimming/Water Activities:</strong> Always considered adventure activities with additional Part B checklist requirements</li>
+                <li><strong>Medical Forms:</strong> Choose Day form for day adventures, Camps form for overnight or overseas</li>
+                <li><strong>Staff Requirements:</strong> Working with Children Checks for non-teachers, eLearn modules for camps/water activities</li>
+                <li><strong>Timeline:</strong> SAL must be completed at least 5 business days before excursion</li>
+                <li><strong>Emergency Contact:</strong> 24-hour school contact person required for overnight excursions</li>
+                <li><strong>Weather Review:</strong> Must check conditions before all excursions</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

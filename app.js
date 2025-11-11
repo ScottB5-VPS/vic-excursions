@@ -85,94 +85,112 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
 
-  // Document mapping from the documents directory
+  // Document mapping aligned with the excursion requirements table
   const documentLibrary = {
-    'risk-assessment-local': {
-      filename: 'excursions-evidence-of-risk-assessment-local.pdf',
-      title: 'Risk Assessment for Local Excursions',
+    'checklist-parts-a-b': {
+      filename: 'camps-excursions-swimming-water-based-activity-checklist-1310.docx',
+      title: 'Checklist (Parts A & B)',
       type: 'paper'
     },
-    'risk-register': {
-      filename: 'excursions-risk-register-1516.docx',
-      title: 'Excursions Risk Register',
-      type: 'paper'
+    'student-activity-locator': {
+      filename: 'student-activity-locator-sal.docx',
+      title: 'Student Activity Locator (SAL)',
+      type: 'online'
     },
-    'parent-consent': {
-      filename: 'excursions-parent-consent-1513.docx',
-      title: 'Parent Consent Form',
-      type: 'paper'
-    },
-    'pre-activity-check': {
-      filename: 'excursions-pre-activity-check-1514.docx',
-      title: 'Pre-Activity Check',
+    'principal-signature': {
+      filename: 'principal-signature-form.docx',
+      title: 'Principal Signature Form',
       type: 'paper'
     },
     'annual-consent': {
       filename: 'local-excursion-annual-consent-form.docx',
-      title: 'Annual Consent Form',
+      title: 'Local Excursions Annual Consent Form',
       type: 'paper'
     },
-    'notification-samples': {
+    'notification-local': {
       filename: 'local-excursion-notification-samples.docx',
-      title: 'Notification Samples',
+      title: 'Notification of Local Excursions',
       type: 'paper'
     },
-    'swimming-checklist': {
-      filename: 'camps-excursions-swimming-water-based-activity-checklist-1310.docx',
-      title: 'Swimming and Water Activity Checklist',
+    'standard-consent': {
+      filename: 'excursions-parent-consent-1513.docx',
+      title: 'Standard Consent Form',
       type: 'paper'
     },
-    'swimming-approval': {
+    'principal-approval': {
       filename: 'camps-excursions-swimming-water-based-activity-principal-approval-form-1311.docx',
       title: 'Principal Approval Form',
       type: 'paper'
     },
-    'swimming-skills': {
-      filename: 'student-skills-swimming-and-water-based-activities-template-2573.docx',
-      title: 'Student Swimming Skills Template',
+    'medical-reminder': {
+      filename: 'medical-reminder-form.docx',
+      title: 'Medical Info Reminder Only',
       type: 'paper'
     },
-    'medical-info-camps': {
-      filename: 'medical-information-form-camps-overseas-excursions-1980.docx',
-      title: 'Medical Information Form (Camps/Overseas)',
-      type: 'paper'
-    },
-    'medical-info-excursions': {
+    'medical-day-adventure': {
       filename: 'medical-information-form-for-excursions-1981.docx',
-      title: 'Medical Information Form (Excursions)',
+      title: 'Medical Form - Day Excursions (Adventure)',
       type: 'paper'
     },
-    'health-support-plan': {
-      filename: 'student-health-support-plan-2478.docx',
-      title: 'Student Health Support Plan',
+    'medical-camps-overseas': {
+      filename: 'medical-information-form-camps-overseas-excursions-1980.docx',
+      title: 'Medical Form - Camps & Overseas',
       type: 'paper'
     },
-    'safety-guidelines': {
-      filename: 'safety-guidelines-form-risk-analysis-tools-1079.doc',
-      title: 'Safety Guidelines & Risk Analysis',
+    'risk-assessment-local': {
+      filename: 'excursions-evidence-of-risk-assessment-local.pdf',
+      title: 'Risk Assessment (Local)',
       type: 'paper'
     },
-    'excursion-clothing': {
-      filename: 'excursion_clothing.doc',
-      title: 'Excursion Clothing Guidelines',
+    'risk-register-emergency': {
+      filename: 'excursions-risk-register-1516.docx',
+      title: 'Risk Register & Emergency Plan',
       type: 'paper'
     },
-    'communications': {
+    'staff-travel-application': {
+      filename: 'staff-travel-application.docx',
+      title: 'Staff Travel Application',
+      type: 'paper'
+    },
+    'pre-activity-check': {
+      filename: 'excursions-pre-activity-check-1514.docx',
+      title: 'Pre-Activity Check (Adventure)',
+      type: 'paper'
+    },
+    'student-skills-swimming': {
+      filename: 'student-skills-swimming-and-water-based-activities-template-2573.docx',
+      title: 'Student Skills (Swimming)',
+      type: 'paper'
+    },
+    'communications-plan': {
       filename: 'excursion_communications.docx',
       title: 'Communications Plan',
       type: 'paper'
     },
-    'emergency-procedures': {
-      filename: 'excursion_emergency.docx',
-      title: 'Emergency Procedures',
-      type: 'paper'
-    },
-    'documentation-summary': {
-      filename: 'summary-of-excursion-documentation-2490.docx',
-      title: 'Summary of Documentation Requirements',
+    'vmia-travel-insurance': {
+      filename: 'vmia-travel-insurance.docx',
+      title: 'VMIA Travel Insurance',
       type: 'paper'
     }
   };
+
+  // Adventure activities detection based on the table requirements
+  function isAdventureActivity(activities) {
+    const adventureActivities = [
+      'swimming', 'water-based', 'canoeing', 'sailing', 'sea-kayaking', 'scuba-diving', 
+      'snorkelling', 'surfing', 'water-skiing', 'windsurfing', 'climbing', 'abseiling', 
+      'rock-climbing', 'challenge-ropes', 'flying-fox', 'snow-activities'
+    ];
+    return activities.some(activity => adventureActivities.includes(activity));
+  }
+
+  function hasSwimmingActivity(activities) {
+    const swimmingActivities = [
+      'swimming', 'water-based', 'canoeing', 'sailing', 'sea-kayaking', 'scuba-diving', 
+      'snorkelling', 'surfing', 'water-skiing', 'windsurfing'
+    ];
+    return activities.some(activity => swimmingActivities.includes(activity));
+  }
 
   function generateExcursionRequirements(formData) {
     const eventDescription = formData.get('eventDescription') || '';
@@ -187,68 +205,146 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const paperForms = [];
     const onlineForms = [];
+    
+    const isAdventure = isAdventureActivity(activities);
+    const hasSwimming = hasSwimmingActivity(activities);
+    const isOvernight = duration.includes('nights') || duration === '1-4-nights' || duration === 'more-5-nights';
+    const isRemote = location === 'remote';
+    const isSeaAirTravel = transport.includes('sea-travel') || transport.includes('air-travel');
+    const isInterstate = type === 'interstate';
+    const isOverseas = type === 'overseas';
 
-    // Always required documents
-    paperForms.push(documentLibrary['risk-assessment-local']);
-    paperForms.push(documentLibrary['parent-consent']);
-    paperForms.push(documentLibrary['pre-activity-check']);
+    // Universal requirements (first three columns - always required)
+    paperForms.push(documentLibrary['checklist-parts-a-b']);
+    onlineForms.push({
+      title: 'Student Activity Locator (SAL)',
+      link: '#sal',
+      description: 'Complete 5+ business days prior to excursion'
+    });
+    paperForms.push(documentLibrary['principal-signature']);
 
-    // Type-specific requirements
-    if (type === 'excursion' && duration === 'half-day') {
-      paperForms.push(documentLibrary['annual-consent']);
-    }
+    // Apply table logic based on excursion type
+    switch (type) {
+      case 'local':
+        paperForms.push(documentLibrary['annual-consent']);
+        paperForms.push(documentLibrary['notification-local']);
+        paperForms.push(documentLibrary['medical-reminder']);
+        paperForms.push(documentLibrary['risk-assessment-local']);
+        break;
 
-    if (type === 'camp' || type === 'overnight' || duration.includes('nights')) {
-      paperForms.push(documentLibrary['medical-info-camps']);
-      paperForms.push(documentLibrary['health-support-plan']);
-      onlineForms.push({
-        title: 'Travel Request Application (ERA)',
-        link: '#',
-        description: 'Online application for overnight stays'
-      });
-    } else {
-      paperForms.push(documentLibrary['medical-info-excursions']);
-    }
+      case 'day':
+        if (!isAdventure) {
+          // Day Excursions (No Adventure)
+          paperForms.push(documentLibrary['standard-consent']);
+          paperForms.push(documentLibrary['medical-reminder']);
+          paperForms.push(documentLibrary['risk-register-emergency']);
+          if (isRemote) paperForms.push(documentLibrary['communications-plan']);
+        } else {
+          // Day Excursions (Adventure)
+          paperForms.push(documentLibrary['standard-consent']);
+          paperForms.push(documentLibrary['principal-approval']);
+          paperForms.push(documentLibrary['medical-day-adventure']);
+          paperForms.push(documentLibrary['risk-register-emergency']);
+          paperForms.push(documentLibrary['pre-activity-check']);
+          if (hasSwimming) paperForms.push(documentLibrary['student-skills-swimming']);
+          if (isRemote) paperForms.push(documentLibrary['communications-plan']);
+        }
+        break;
 
-    // Activity-specific requirements
-    if (activities.some(act => ['swimming', 'water-based', 'canoeing', 'sailing', 'sea-kayaking', 'scuba-diving', 'snorkelling', 'surfing', 'water-skiing'].includes(act))) {
-      paperForms.push(documentLibrary['swimming-checklist']);
-      paperForms.push(documentLibrary['swimming-approval']);
-      paperForms.push(documentLibrary['swimming-skills']);
-      onlineForms.push({
-        title: 'Student Activity Locator (SAL)',
-        link: '#',
-        description: 'Track student participation in water activities'
-      });
+      case 'overnight-camp':
+        paperForms.push(documentLibrary['standard-consent']);
+        paperForms.push(documentLibrary['principal-approval']);
+        paperForms.push(documentLibrary['medical-camps-overseas']);
+        paperForms.push(documentLibrary['risk-register-emergency']);
+        
+        if (isAdventure) {
+          paperForms.push(documentLibrary['pre-activity-check']);
+        }
+        if (hasSwimming) paperForms.push(documentLibrary['student-skills-swimming']);
+        if (isRemote) paperForms.push(documentLibrary['communications-plan']);
+        break;
+
+      case 'interstate':
+        paperForms.push(documentLibrary['standard-consent']);
+        paperForms.push(documentLibrary['principal-approval']);
+        paperForms.push(documentLibrary['risk-register-emergency']);
+        paperForms.push(documentLibrary['staff-travel-application']);
+        
+        if (isOvernight) {
+          paperForms.push(documentLibrary['medical-camps-overseas']);
+        } else {
+          paperForms.push(documentLibrary['medical-day-adventure']);
+        }
+        
+        if (isAdventure) paperForms.push(documentLibrary['pre-activity-check']);
+        if (hasSwimming) paperForms.push(documentLibrary['student-skills-swimming']);
+        if (isRemote) paperForms.push(documentLibrary['communications-plan']);
+        
+        // Recommended insurance
+        onlineForms.push({
+          title: 'VMIA Travel Insurance',
+          link: '#vmia',
+          description: 'Recommended for interstate travel'
+        });
+        break;
+
+      case 'overseas':
+        paperForms.push(documentLibrary['standard-consent']);
+        paperForms.push(documentLibrary['principal-approval']);
+        paperForms.push(documentLibrary['medical-camps-overseas']);
+        paperForms.push(documentLibrary['risk-register-emergency']);
+        paperForms.push(documentLibrary['staff-travel-application']);
+        paperForms.push(documentLibrary['communications-plan']);
+        paperForms.push(documentLibrary['vmia-travel-insurance']);
+        
+        if (isAdventure) paperForms.push(documentLibrary['pre-activity-check']);
+        if (hasSwimming) paperForms.push(documentLibrary['student-skills-swimming']);
+        break;
+
+      case 'weekend-holiday':
+      case 'sea-air-travel':
+        paperForms.push(documentLibrary['standard-consent']);
+        paperForms.push(documentLibrary['principal-approval']);
+        paperForms.push(documentLibrary['risk-register-emergency']);
+        
+        // Conditional medical forms
+        if (!isAdventure) {
+          paperForms.push(documentLibrary['medical-reminder']);
+        } else if (!isOvernight) {
+          paperForms.push(documentLibrary['medical-day-adventure']);
+        } else {
+          paperForms.push(documentLibrary['medical-camps-overseas']);
+        }
+        
+        if ((isInterstate || isOverseas) && type !== 'interstate' && type !== 'overseas') {
+          paperForms.push(documentLibrary['staff-travel-application']);
+        }
+        
+        if (isAdventure) paperForms.push(documentLibrary['pre-activity-check']);
+        if (hasSwimming) paperForms.push(documentLibrary['student-skills-swimming']);
+        if (isRemote || isOverseas) paperForms.push(documentLibrary['communications-plan']);
+        if (isOverseas) paperForms.push(documentLibrary['vmia-travel-insurance']);
+        break;
     }
 
     // External providers
     if (externalProviders === 'yes-ep') {
       onlineForms.push({
         title: 'ParkConnect',
-        link: '#',
+        link: '#parkconnect',
         description: 'External provider verification system'
       });
     }
 
-    // Communication and emergency planning
-    paperForms.push(documentLibrary['communications']);
-    paperForms.push(documentLibrary['emergency-procedures']);
-
-    // Safety guidelines
-    paperForms.push(documentLibrary['safety-guidelines']);
-
-    // Documentation summary
-    paperForms.push(documentLibrary['documentation-summary']);
-
-    // Calculate estimated time
-    const baseTime = 20;
+    // Calculate estimated time based on requirements
+    const baseTime = 25;
     let additionalTime = 0;
     
-    if (activities.length > 3) additionalTime += 10;
-    if (type === 'camp' || duration.includes('nights')) additionalTime += 15;
-    if (activities.some(act => ['swimming', 'water-based'].includes(act))) additionalTime += 10;
-    if (externalProviders === 'yes-ep') additionalTime += 5;
+    if (paperForms.length > 8) additionalTime += 15;
+    if (isAdventure) additionalTime += 10;
+    if (hasSwimming) additionalTime += 10;
+    if (isOvernight) additionalTime += 20;
+    if (isOverseas) additionalTime += 25;
     
     const totalTime = baseTime + additionalTime;
 
@@ -257,15 +353,31 @@ document.addEventListener('DOMContentLoaded', () => {
       onlineForms,
       estimatedTime: totalTime,
       summary: {
-        type: type || 'Not specified',
+        type: getTypeDisplayName(type),
+        duration: duration || 'Not specified',
         students: students || 'Not specified',
         activities: activities.length ? activities.join(', ') : 'Not specified',
         transport: transport.length ? transport.join(', ') : 'Not specified',
         location: location || 'Not specified',
         externalProviders: externalProviders === 'yes-ep' ? 'I am utilising external providers' : 
-                          externalProviders === 'no-ep' ? 'Not using external providers' : 'Not specified'
+                          externalProviders === 'no-ep' ? 'Not using external providers' : 'Not specified',
+        isAdventure: isAdventure ? 'Yes' : 'No',
+        hasSwimming: hasSwimming ? 'Yes' : 'No'
       }
     };
+  }
+
+  function getTypeDisplayName(type) {
+    const typeNames = {
+      'local': 'Local Excursions',
+      'day': 'Day Excursions',
+      'overnight-camp': 'Overnight/Camps',
+      'interstate': 'Interstate',
+      'overseas': 'Overseas',
+      'weekend-holiday': 'Weekend/Holiday Excursions',
+      'sea-air-travel': 'Sea/Air Travel Excursions'
+    };
+    return typeNames[type] || 'Not specified';
   }
 
   function generateRiskAssessment(description, type, duration, activities, transport, location) {
