@@ -3,67 +3,153 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Vic Excursions — File Generator</title>
+    <title>Victoria Excursion Planning Tool</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Simple File Generator</h1>
-            <p class="lead">Fill the form, then download generated files. Works on GitHub Pages and VS Code Live Server — no install required.</p>
-        </header>
+  <div class="container">
+    <header class="vic-header">
+      <div class="vic-logo">
+        <div class="logo-triangle">▲</div>
+        <span class="logo-text">VICTORIA</span>
+        <span class="logo-subtext">State Government</span>
+      </div>
+      <div class="breadcrumb">
+        Start → Form Generator & Document Upload → Travel Purpose → Submit
+      </div>
+    </header>
 
-        <form id="generator-form">
-            <div class="field">
-                <label>Project name
-                    <input type="text" id="projectName" name="projectName" required placeholder="My Project">
-                </label>
-            </div>
-            <div class="field">
-                <label>Author
-                    <input type="text" id="author" name="author" placeholder="Your Name">
-                </label>
-            </div>
-            <div class="field">
-                <label>Description
-                    <textarea id="description" name="description" rows="4" placeholder="Short description"></textarea>
-                </label>
-            </div>
-            <div class="field">
-                <label>License
-                    <select id="license" name="license">
-                        <option>MIT</option>
-                        <option>Apache-2.0</option>
-                        <option>GPL-3.0</option>
-                        <option>Unlicense</option>
-                    </select>
-                </label>
-            </div>
+    <form id="generator-form">
+      <div class="section">
+        <h2>Describe your event in a few words</h2>
+        <textarea id="eventDescription" name="eventDescription" placeholder="Start typing..." rows="3"></textarea>
+      </div>
 
-            <fieldset>
-                <legend>Files to generate</legend>
-                <label><input type="checkbox" name="files" value="readme" checked> README.md</label>
-                <label><input type="checkbox" name="files" value="config" checked> config.json</label>
-                <label><input type="checkbox" name="files" value="index"> sample.html</label>
-                <label><input type="checkbox" name="files" value="notes"> notes.txt</label>
-            </fieldset>
+      <div class="section">
+        <h2>OR select titles that describe your event</h2>
+        
+        <div class="field-group">
+          <h3>Type</h3>
+          <div class="button-group">
+            <label class="pill-button"><input type="radio" name="type" value="excursion"> Excursion</label>
+            <label class="pill-button"><input type="radio" name="type" value="overnight"> Overnight</label>
+            <label class="pill-button"><input type="radio" name="type" value="camp"> Camp</label>
+            <label class="pill-button"><input type="radio" name="type" value="interstate"> Interstate</label>
+            <label class="pill-button"><input type="radio" name="type" value="overseas"> Overseas</label>
+          </div>
+        </div>
 
-            <div class="actions">
-                <button type="submit" id="generateBtn">Generate files</button>
-            </div>
-        </form>
+        <div class="field-group">
+          <h3>Duration</h3>
+          <div class="button-group">
+            <label class="pill-button"><input type="radio" name="duration" value="half-day"> Half day</label>
+            <label class="pill-button"><input type="radio" name="duration" value="full-day"> Full day</label>
+            <label class="pill-button"><input type="radio" name="duration" value="1-4-nights"> 1-4 nights</label>
+            <label class="pill-button"><input type="radio" name="duration" value="more-5-nights"> More than 5 nights</label>
+          </div>
+        </div>
 
-        <section id="downloads" class="hidden">
-            <h2>Download generated files</h2>
-            <ul id="fileList" class="file-list"></ul>
-            <div class="actions">
-                <button id="backBtn">Back to edit</button>
-            </div>
-        </section>
+        <div class="field-group">
+          <h3>Time of day</h3>
+          <div class="button-group">
+            <label class="pill-button"><input type="radio" name="timeOfDay" value="school-hours"> During school hours</label>
+            <label class="pill-button"><input type="radio" name="timeOfDay" value="before-school"> Before school hours</label>
+            <label class="pill-button"><input type="radio" name="timeOfDay" value="after-school"> After school hours</label>
+            <label class="pill-button"><input type="radio" name="timeOfDay" value="weekends"> Weekends</label>
+            <label class="pill-button"><input type="radio" name="timeOfDay" value="holidays"> Holidays</label>
+          </div>
+        </div>
 
-        <footer>
-            <p class="muted">This is a static page using vanilla HTML, CSS and JavaScript. Drop these files in a repo and enable GitHub Pages or open locally with Live Server.</p>
-        </footer>
+        <div class="field-group">
+          <h3>Students</h3>
+          <div class="button-group">
+            <label class="pill-button"><input type="radio" name="students" value="less-20"> Less than 20 students</label>
+            <label class="pill-button"><input type="radio" name="students" value="20-60"> 20-60 students</label>
+            <label class="pill-button"><input type="radio" name="students" value="60-100"> 60-100 students</label>
+            <label class="pill-button"><input type="radio" name="students" value="100-plus"> 100+ students</label>
+            <label class="pill-button"><input type="radio" name="students" value="250-plus"> 250+ students</label>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <h3>Activities (select all that apply)</h3>
+          <div class="activity-grid">
+            <label class="activity-card"><input type="checkbox" name="activities" value="swimming"> <div class="icon">🏊</div> Swimming</label>
+            <label class="activity-card"><input type="checkbox" name="activities" value="water-based"> <div class="icon">🚣</div> Water-based activities</label>
+            <label class="activity-card"><input type="checkbox" name="activities" value="public-lands"> <div class="icon">👥</div> Public lands</label>
+            <label class="activity-card"><input type="checkbox" name="activities" value="forests"> <div class="icon">🌲</div> Forests/National parks</label>
+            <label class="activity-card"><input type="checkbox" name="activities" value="abseiling"> <div class="icon">🧗</div> Abseiling</label>
+            <label class="activity-card"><input type="checkbox" name="activities" value="climbing"> <div class="icon">🧗</div> Climbing and abseiling</label>
+            <label class="activity-card"><input type="checkbox" name="activities" value="bushwalking"> <div class="icon">🥾</div> Bushwalking</label>
+            <label class="activity-card"><input type="checkbox" name="activities" value="camping"> <div class="icon">🏕️</div> Camping</label>
+            <label class="activity-card"><input type="checkbox" name="activities" value="canoeing"> <div class="icon">🛶</div> Canoeing/Kayaking</label>
+            <label class="activity-card"><input type="checkbox" name="activities" value="challenge-ropes"> <div class="icon">🎯</div> Challenge rope courses</label>
+            <label class="activity-card"><input type="checkbox" name="activities" value="cycling"> <div class="icon">🚴</div> Cycling/Biking</label>
+            <label class="activity-card"><input type="checkbox" name="activities" value="horse-riding"> <div class="icon">🐎</div> Horse riding</label>
+            <label class="activity-card"><input type="checkbox" name="activities" value="orienteering"> <div class="icon">🧭</div> Orienteering</label>
+            <label class="activity-card"><input type="checkbox" name="activities" value="rafting"> <div class="icon">🚣</div> Rafting</label>
+            <label class="activity-card"><input type="checkbox" name="activities" value="rock-climbing"> <div class="icon">🧗</div> Rock climbing</label>
+            <label class="activity-card"><input type="checkbox" name="activities" value="sailing"> <div class="icon">⛵</div> Sailing</label>
+            <label class="activity-card"><input type="checkbox" name="activities" value="scuba-diving"> <div class="icon">🤿</div> Scuba diving</label>
+            <label class="activity-card"><input type="checkbox" name="activities" value="sea-kayaking"> <div class="icon">🛶</div> Sea kayaking</label>
+            <label class="activity-card"><input type="checkbox" name="activities" value="snorkelling"> <div class="icon">🤿</div> Snorkelling</label>
+            <label class="activity-card"><input type="checkbox" name="activities" value="snow-activities"> <div class="icon">⛷️</div> Snow activities</label>
+            <label class="activity-card"><input type="checkbox" name="activities" value="surfing"> <div class="icon">🏄</div> Surfing/surf boarding</label>
+            <label class="activity-card"><input type="checkbox" name="activities" value="water-skiing"> <div class="icon">🎿</div> Water skiing</label>
+            <label class="activity-card"><input type="checkbox" name="activities" value="windsurfing"> <div class="icon">🏄</div> Windsurfing</label>
+            <label class="activity-card"><input type="checkbox" name="activities" value="flying-fox"> <div class="icon">🦅</div> Flying fox</label>
+            <label class="activity-card"><input type="checkbox" name="activities" value="other"> <div class="icon">➕</div> Other</label>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <h3>Transport (select all that apply)</h3>
+          <div class="button-group">
+            <label class="pill-button"><input type="checkbox" name="transport" value="bus"> Bus</label>
+            <label class="pill-button"><input type="checkbox" name="transport" value="private-vehicle"> Private vehicle</label>
+            <label class="pill-button"><input type="checkbox" name="transport" value="public-transport"> Public transport</label>
+            <label class="pill-button"><input type="checkbox" name="transport" value="sea-travel"> Sea travel</label>
+            <label class="pill-button"><input type="checkbox" name="transport" value="air-travel"> Air travel</label>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <h3>Location</h3>
+          <div class="button-group">
+            <label class="pill-button"><input type="radio" name="location" value="local"> Local</label>
+            <label class="pill-button"><input type="radio" name="location" value="remote"> Remote</label>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <h3>Are you utilising external providers?</h3>
+          <div class="button-group">
+            <label class="pill-button"><input type="radio" name="externalProviders" value="yes-ep"> Yes, using EP</label>
+            <label class="pill-button"><input type="radio" name="externalProviders" value="no-ep"> No, not using EP</label>
+            <label class="pill-button"><input type="radio" name="externalProviders" value="not-sure-ep"> Not sure if using EP</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button type="button" class="secondary-btn">Back</button>
+        <button type="button" class="secondary-btn">Close for later</button>
+        <button type="submit" id="generateBtn" class="primary-btn">Next</button>
+      </div>
+    </form>
+
+    <section id="downloads" class="hidden">
+      <h2>Required Documents & Tasks for Your Excursion</h2>
+      <p class="lead">Based on your selections, here are the documents and tasks you need to complete:</p>
+      <ul id="fileList" class="file-list"></ul>
+      <div class="actions">
+        <button id="backBtn" class="secondary-btn">Back to edit form</button>
+      </div>
+    </section>
+
+    <footer>
+      <p class="muted">Victoria Department of Education - Excursion Planning Tool. This tool helps teachers and principals identify required documentation and tasks for school excursions.</p>
+    </footer>
     </div>
 
     <script src="app.js"></script>
