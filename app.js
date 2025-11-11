@@ -501,8 +501,14 @@ Victoria Department of Education`;
       </div>
     `;
 
+    // Hide form and show downloads
     form.classList.add('hidden');
+    form.style.display = 'none'; // Force hide with inline style
     downloads.classList.remove('hidden');
+    downloads.style.display = 'block'; // Force show with inline style
+    
+    // Scroll to top when showing downloads page
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 
   // Event handlers for the results page
