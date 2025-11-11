@@ -521,6 +521,53 @@ Victoria Department of Education`;
     makeBlobAndDownload('Excursion_Requirements.pdf', pdfContent, 'application/pdf');
   });
 
+  // Download All button - zips all required documents from the documents/ directory
+  document.getElementById('downloadAllBtn').addEventListener('click', async () => {
+    const btn = document.getElementById('downloadAllBtn');
+    btn.disabled = true;
+    const originalText = btn.textContent;
+    btn.textContent = 'Preparing...';
+
+    if (typeof JSZip === 'undefined') {
+      alert('ZIP support library not loaded. Please ensure JSZip is available.');
+      btn.disabled = false;
+      btn.textContent = originalText;
+      return;
+    }
+
+    try {
+      const formData = new FormData(form);
+      const requirements = generateExcursionRequirements(formData);
+      const zip = new JSZip();
+
+      // Add paper forms
+      for (const doc of requirements.paperForms) {
+        try {
+          const res = await fetch(`./documents/${doc.filename}`);
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          const blob = await res.blob();
+          zip.file(doc.filename, blob);
+        } catch (err) {
+          // If we can't fetch the real file, add a note file instead
+          zip.file(`${doc.filename}.missing.txt`, `Could not fetch ${doc.filename}: ${err.message}`);
+        }
+      }
+
+      // Add a summary text file of requirements
+      const summaryText = generateComprehensivePDF(requirements, formData.get('eventDescription') || 'Excursion planning requirements');
+      zip.file('Excursion_Requirements.txt', summaryText);
+
+      const content = await zip.generateAsync({ type: 'blob' });
+      makeBlobAndDownload('Excursion_Requirements.zip', content, 'application/zip');
+    } catch (err) {
+      console.error('Download all failed', err);
+      alert('Failed to prepare ZIP: ' + err.message);
+    } finally {
+      btn.disabled = false;
+      btn.textContent = originalText;
+    }
+  });
+
   function generateComprehensivePDF(requirements, eventDescription) {
     return `VICTORIA EXCURSION PLANNING REQUIREMENTS
 
