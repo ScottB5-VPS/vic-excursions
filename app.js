@@ -6,10 +6,18 @@ document.addEventListener('DOMContentLoaded', () => {
   const backBtn = document.getElementById('backBtn');
 
   // Get Started button functionality
-  document.getElementById('getStartedBtn').addEventListener('click', () => {
-    landing.classList.add('hidden');
-    form.classList.remove('hidden');
-  });
+  const getStartedBtn = document.getElementById('getStartedBtn');
+  if (getStartedBtn && landing && form) {
+    getStartedBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      console.log('Get Started clicked - transitioning to form'); // Debug log
+      landing.style.display = 'none'; // Force hide with inline style
+      form.style.display = 'block'; // Force show with inline style
+      form.classList.remove('hidden');
+    });
+  } else {
+    console.error('Elements not found:', { getStartedBtn, landing, form });
+  }
 
   function makeBlobAndDownload(filename, content, mime) {
     const blob = new Blob([content], { type: mime || 'application/octet-stream' });
