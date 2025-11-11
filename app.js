@@ -16,7 +16,96 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
 
-  function generateExcursionDocuments(formData) {
+  // Document mapping from the documents directory
+  const documentLibrary = {
+    'risk-assessment-local': {
+      filename: 'excursions-evidence-of-risk-assessment-local.pdf',
+      title: 'Risk Assessment for Local Excursions',
+      type: 'paper'
+    },
+    'risk-register': {
+      filename: 'excursions-risk-register-1516.docx',
+      title: 'Excursions Risk Register',
+      type: 'paper'
+    },
+    'parent-consent': {
+      filename: 'excursions-parent-consent-1513.docx',
+      title: 'Parent Consent Form',
+      type: 'paper'
+    },
+    'pre-activity-check': {
+      filename: 'excursions-pre-activity-check-1514.docx',
+      title: 'Pre-Activity Check',
+      type: 'paper'
+    },
+    'annual-consent': {
+      filename: 'local-excursion-annual-consent-form.docx',
+      title: 'Annual Consent Form',
+      type: 'paper'
+    },
+    'notification-samples': {
+      filename: 'local-excursion-notification-samples.docx',
+      title: 'Notification Samples',
+      type: 'paper'
+    },
+    'swimming-checklist': {
+      filename: 'camps-excursions-swimming-water-based-activity-checklist-1310.docx',
+      title: 'Swimming and Water Activity Checklist',
+      type: 'paper'
+    },
+    'swimming-approval': {
+      filename: 'camps-excursions-swimming-water-based-activity-principal-approval-form-1311.docx',
+      title: 'Principal Approval Form',
+      type: 'paper'
+    },
+    'swimming-skills': {
+      filename: 'student-skills-swimming-and-water-based-activities-template-2573.docx',
+      title: 'Student Swimming Skills Template',
+      type: 'paper'
+    },
+    'medical-info-camps': {
+      filename: 'medical-information-form-camps-overseas-excursions-1980.docx',
+      title: 'Medical Information Form (Camps/Overseas)',
+      type: 'paper'
+    },
+    'medical-info-excursions': {
+      filename: 'medical-information-form-for-excursions-1981.docx',
+      title: 'Medical Information Form (Excursions)',
+      type: 'paper'
+    },
+    'health-support-plan': {
+      filename: 'student-health-support-plan-2478.docx',
+      title: 'Student Health Support Plan',
+      type: 'paper'
+    },
+    'safety-guidelines': {
+      filename: 'safety-guidelines-form-risk-analysis-tools-1079.doc',
+      title: 'Safety Guidelines & Risk Analysis',
+      type: 'paper'
+    },
+    'excursion-clothing': {
+      filename: 'excursion_clothing.doc',
+      title: 'Excursion Clothing Guidelines',
+      type: 'paper'
+    },
+    'communications': {
+      filename: 'excursion_communications.docx',
+      title: 'Communications Plan',
+      type: 'paper'
+    },
+    'emergency-procedures': {
+      filename: 'excursion_emergency.docx',
+      title: 'Emergency Procedures',
+      type: 'paper'
+    },
+    'documentation-summary': {
+      filename: 'summary-of-excursion-documentation-2490.docx',
+      title: 'Summary of Documentation Requirements',
+      type: 'paper'
+    }
+  };
+
+  function generateExcursionRequirements(formData) {
     const eventDescription = formData.get('eventDescription') || '';
     const type = formData.get('type') || '';
     const duration = formData.get('duration') || '';
@@ -27,84 +116,87 @@ document.addEventListener('DOMContentLoaded', () => {
     const location = formData.get('location') || '';
     const externalProviders = formData.get('externalProviders') || '';
 
-    const documents = [];
+    const paperForms = [];
+    const onlineForms = [];
 
-    // Risk Assessment (always required)
-    const riskAssessment = generateRiskAssessment(eventDescription, type, duration, activities, transport, location);
-    documents.push({
-      title: 'Risk Assessment Form',
-      filename: 'Risk_Assessment.docx',
-      content: riskAssessment,
-      description: 'Required for all excursions. Identifies and evaluates potential risks.',
-      mime: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-    });
+    // Always required documents
+    paperForms.push(documentLibrary['risk-assessment-local']);
+    paperForms.push(documentLibrary['parent-consent']);
+    paperForms.push(documentLibrary['pre-activity-check']);
 
-    // Permission Forms
-    const permissionForm = generatePermissionForm(eventDescription, type, duration, timeOfDay, activities, transport);
-    documents.push({
-      title: 'Student Permission Form',
-      filename: 'Permission_Form.pdf',
-      content: permissionForm,
-      description: 'Required permission slip for parents/guardians to sign.',
-      mime: 'application/pdf'
-    });
+    // Type-specific requirements
+    if (type === 'excursion' && duration === 'half-day') {
+      paperForms.push(documentLibrary['annual-consent']);
+    }
 
-    // Excursion Planning Checklist
-    const checklist = generatePlanningChecklist(type, duration, activities, transport, externalProviders);
-    documents.push({
-      title: 'Excursion Planning Checklist',
-      filename: 'Planning_Checklist.pdf',
-      content: checklist,
-      description: 'Step-by-step checklist to ensure all requirements are met.',
-      mime: 'application/pdf'
-    });
+    if (type === 'camp' || type === 'overnight' || duration.includes('nights')) {
+      paperForms.push(documentLibrary['medical-info-camps']);
+      paperForms.push(documentLibrary['health-support-plan']);
+      onlineForms.push({
+        title: 'Travel Request Application (ERA)',
+        link: '#',
+        description: 'Online application for overnight stays'
+      });
+    } else {
+      paperForms.push(documentLibrary['medical-info-excursions']);
+    }
 
-    // Activity-specific documents
-    if (activities.some(act => ['swimming', 'water-based', 'canoeing', 'sailing', 'sea-kayaking'].includes(act))) {
-      const waterSafety = generateWaterSafetyPlan();
-      documents.push({
-        title: 'Water Safety Management Plan',
-        filename: 'Water_Safety_Plan.docx',
-        content: waterSafety,
-        description: 'Required for all water-based activities.',
-        mime: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+    // Activity-specific requirements
+    if (activities.some(act => ['swimming', 'water-based', 'canoeing', 'sailing', 'sea-kayaking', 'scuba-diving', 'snorkelling', 'surfing', 'water-skiing'].includes(act))) {
+      paperForms.push(documentLibrary['swimming-checklist']);
+      paperForms.push(documentLibrary['swimming-approval']);
+      paperForms.push(documentLibrary['swimming-skills']);
+      onlineForms.push({
+        title: 'Student Activity Locator (SAIL)',
+        link: '#',
+        description: 'Track student participation in water activities'
       });
     }
 
-    if (activities.includes('camping') || type === 'camp' || duration.includes('nights')) {
-      const campingPlan = generateCampingPlan();
-      documents.push({
-        title: 'Camping Safety Plan',
-        filename: 'Camping_Plan.docx',
-        content: campingPlan,
-        description: 'Required for overnight stays and camping activities.',
-        mime: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-      });
-    }
-
+    // External providers
     if (externalProviders === 'yes-ep') {
-      const providerChecklist = generateProviderChecklist();
-      documents.push({
-        title: 'External Provider Verification',
-        filename: 'Provider_Verification.pdf',
-        content: providerChecklist,
-        description: 'Verification checklist for external activity providers.',
-        mime: 'application/pdf'
+      onlineForms.push({
+        title: 'ParkConnect',
+        link: '#',
+        description: 'External provider verification system'
       });
     }
 
-    if (transport.includes('bus') || transport.includes('private-vehicle')) {
-      const transportPlan = generateTransportPlan();
-      documents.push({
-        title: 'Transport Management Plan',
-        filename: 'Transport_Plan.docx',
-        content: transportPlan,
-        description: 'Required for bus and private vehicle transport.',
-        mime: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-      });
-    }
+    // Communication and emergency planning
+    paperForms.push(documentLibrary['communications']);
+    paperForms.push(documentLibrary['emergency-procedures']);
 
-    return documents;
+    // Safety guidelines
+    paperForms.push(documentLibrary['safety-guidelines']);
+
+    // Documentation summary
+    paperForms.push(documentLibrary['documentation-summary']);
+
+    // Calculate estimated time
+    const baseTime = 20;
+    let additionalTime = 0;
+    
+    if (activities.length > 3) additionalTime += 10;
+    if (type === 'camp' || duration.includes('nights')) additionalTime += 15;
+    if (activities.some(act => ['swimming', 'water-based'].includes(act))) additionalTime += 10;
+    if (externalProviders === 'yes-ep') additionalTime += 5;
+    
+    const totalTime = baseTime + additionalTime;
+
+    return {
+      paperForms: paperForms.filter(doc => doc), // Remove any undefined documents
+      onlineForms,
+      estimatedTime: totalTime,
+      summary: {
+        type: type || 'Not specified',
+        students: students || 'Not specified',
+        activities: activities.length ? activities.join(', ') : 'Not specified',
+        transport: transport.length ? transport.join(', ') : 'Not specified',
+        location: location || 'Not specified',
+        externalProviders: externalProviders === 'yes-ep' ? 'I am utilising external providers' : 
+                          externalProviders === 'no-ep' ? 'Not using external providers' : 'Not specified'
+      }
+    };
   }
 
   function generateRiskAssessment(description, type, duration, activities, transport, location) {
@@ -328,47 +420,145 @@ Victoria Department of Education`;
     const duration = formData.get('duration');
     
     if (!type || !duration) {
-      alert('Please select at least the excursion type and duration to generate documents.');
+      alert('Please select at least the excursion type and duration to generate requirements.');
       return;
     }
 
-    const documents = generateExcursionDocuments(formData);
+    const requirements = generateExcursionRequirements(formData);
     
-    fileList.innerHTML = '';
-
-    documents.forEach((doc) => {
-      const li = document.createElement('li');
-      
-      const fileInfo = document.createElement('div');
-      fileInfo.className = 'file-info';
-      
-      const title = document.createElement('div');
-      title.className = 'file-title';
-      title.textContent = doc.title;
-      
-      const desc = document.createElement('div');
-      desc.className = 'file-desc';
-      desc.textContent = doc.description;
-      
-      fileInfo.appendChild(title);
-      fileInfo.appendChild(desc);
-      
-      const btn = document.createElement('button');
-      btn.className = 'primary-btn';
-      btn.textContent = 'Download';
-      btn.addEventListener('click', () => makeBlobAndDownload(doc.filename, doc.content, doc.mime));
-      
-      li.appendChild(fileInfo);
-      li.appendChild(btn);
-      fileList.appendChild(li);
+    // Update time estimate
+    document.getElementById('timeEstimate').textContent = requirements.estimatedTime;
+    
+    // Populate paper forms
+    const paperFormsContainer = document.getElementById('paperForms');
+    paperFormsContainer.innerHTML = '';
+    requirements.paperForms.forEach(doc => {
+      const formCard = document.createElement('div');
+      formCard.className = 'form-card';
+      formCard.innerHTML = `
+        <div class="download-icon">📄</div>
+        <div class="form-title">${doc.title}</div>
+        <a href="./documents/${doc.filename}" class="form-link" download>Download</a>
+      `;
+      paperFormsContainer.appendChild(formCard);
     });
+
+    // Populate online forms
+    const onlineFormsContainer = document.getElementById('onlineForms');
+    onlineFormsContainer.innerHTML = '';
+    requirements.onlineForms.forEach(form => {
+      const formCard = document.createElement('div');
+      formCard.className = 'form-card';
+      formCard.innerHTML = `
+        <div class="link-icon">🔗</div>
+        <div class="form-title">${form.title}</div>
+        <a href="${form.link}" class="form-link" target="_blank">Open Form</a>
+      `;
+      onlineFormsContainer.appendChild(formCard);
+    });
+
+    // Populate activity summary
+    const summaryContainer = document.getElementById('activitySummary');
+    summaryContainer.innerHTML = `
+      <div class="summary-item">
+        <div class="summary-label">Type:</div>
+        <div class="summary-value">${requirements.summary.type}</div>
+      </div>
+      <div class="summary-item">
+        <div class="summary-label">Number of students:</div>
+        <div class="summary-value">${requirements.summary.students}</div>
+      </div>
+      <div class="summary-item">
+        <div class="summary-label">Activities:</div>
+        <div class="summary-value">${requirements.summary.activities}</div>
+      </div>
+      <div class="summary-item">
+        <div class="summary-label">Transport:</div>
+        <div class="summary-value">${requirements.summary.transport}</div>
+      </div>
+      <div class="summary-item">
+        <div class="summary-label">Location:</div>
+        <div class="summary-value">${requirements.summary.location}</div>
+      </div>
+      <div class="summary-item">
+        <div class="summary-label">External providers:</div>
+        <div class="summary-value">${requirements.summary.externalProviders}</div>
+      </div>
+    `;
 
     form.classList.add('hidden');
     downloads.classList.remove('hidden');
   });
 
-  backBtn.addEventListener('click', () => {
+  // Event handlers for the results page
+  document.getElementById('backBtn').addEventListener('click', () => {
     downloads.classList.add('hidden');
     form.classList.remove('hidden');
   });
+
+  document.getElementById('editBtn').addEventListener('click', () => {
+    downloads.classList.add('hidden');
+    form.classList.remove('hidden');
+  });
+
+  document.getElementById('closeLaterBtn').addEventListener('click', () => {
+    if (confirm('Are you sure you want to close without completing? Your progress will be lost.')) {
+      location.reload();
+    }
+  });
+
+  document.getElementById('nextBtn').addEventListener('click', () => {
+    alert('This would proceed to the next step in the excursion planning process.');
+  });
+
+  document.getElementById('downloadPDFBtn').addEventListener('click', () => {
+    // Generate a comprehensive PDF with all requirements
+    const formData = new FormData(form);
+    const requirements = generateExcursionRequirements(formData);
+    const eventDescription = formData.get('eventDescription') || 'Excursion planning requirements';
+    
+    const pdfContent = generateComprehensivePDF(requirements, eventDescription);
+    makeBlobAndDownload('Excursion_Requirements.pdf', pdfContent, 'application/pdf');
+  });
+
+  function generateComprehensivePDF(requirements, eventDescription) {
+    return `VICTORIA EXCURSION PLANNING REQUIREMENTS
+
+Event: ${eventDescription}
+Generated: ${new Date().toLocaleString()}
+
+ESTIMATED TIME TO COMPLETE: ${requirements.estimatedTime} minutes
+
+PAPER FORMS TO COMPLETE:
+${requirements.paperForms.map(doc => `• ${doc.title} (${doc.filename})`).join('\n')}
+
+ONLINE FORMS TO COMPLETE:
+${requirements.onlineForms.map(form => `• ${form.title} - ${form.description}`).join('\n')}
+
+ACTIVITY SUMMARY:
+Type: ${requirements.summary.type}
+Number of students: ${requirements.summary.students}
+Activities: ${requirements.summary.activities}
+Transport: ${requirements.summary.transport}
+Location: ${requirements.summary.location}
+External providers: ${requirements.summary.externalProviders}
+
+RELEVANT POLICY INFORMATION:
+• First Aid
+• Venue Selection
+• Transport
+• Adventure Activities
+• Communication
+• Private Vehicle Use
+• Student Medical Information
+
+NEXT STEPS:
+1. Download and complete all required paper forms
+2. Submit online forms through the appropriate systems
+3. Review all policy information
+4. Obtain necessary approvals before proceeding with excursion
+
+Victoria Department of Education
+Excursion Planning Tool`;
+  }
 });
