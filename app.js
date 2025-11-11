@@ -11,9 +11,15 @@ document.addEventListener('DOMContentLoaded', () => {
     getStartedBtn.addEventListener('click', (e) => {
       e.preventDefault();
       console.log('Get Started clicked - transitioning to form'); // Debug log
+      
+      // Hide landing page and show form
+      landing.classList.add('hidden');
       landing.style.display = 'none'; // Force hide with inline style
-      form.style.display = 'block'; // Force show with inline style
       form.classList.remove('hidden');
+      form.style.display = 'block'; // Force show with inline style
+      
+      // Scroll to top when showing form
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   } else {
     console.error('Elements not found:', { getStartedBtn, landing, form });
